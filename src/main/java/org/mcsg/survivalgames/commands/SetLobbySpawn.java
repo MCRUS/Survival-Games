@@ -10,17 +10,17 @@ public class SetLobbySpawn implements SubCommand {
 
     public boolean onCommand(Player player, String[] args) {
         if(!player.hasPermission("sg.admin.setlobby") && !player.isOp()){
-            player.sendMessage(ChatColor.RED+"No Permission");
+            player.sendMessage(ChatColor.RED+"Недостаточно прав");
             return true;
         }
         SettingsManager.getInstance().setLobbySpawn(player.getLocation());
-        player.sendMessage(ChatColor.GREEN+"Lobby spawnpoint set!");
+        player.sendMessage(ChatColor.GREEN+"Точка спавна в лобби указана!");
         return true;
     }
     
     @Override
     public String help(Player p) {
-        return "/sg setlobbyspawn - Set the lobby spawn point";
+        return "/sg setlobbyspawn - Указывает точку спавна в лобби";
     }
 
 	@Override

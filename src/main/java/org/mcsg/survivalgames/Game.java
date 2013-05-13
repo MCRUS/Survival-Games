@@ -19,7 +19,7 @@ import org.mcsg.survivalgames.hooks.HookManager;
 import org.mcsg.survivalgames.logging.QueueManager;
 import org.mcsg.survivalgames.stats.StatsManager;
 import org.mcsg.survivalgames.util.Kit;
-
+import org.mcsg.survivalgames.util.StringUtil;
 
 
 //Data container for a game
@@ -158,7 +158,7 @@ public class Game {
 		}
 		int c = 1;
 		for (Player p : queue) {
-			msgmgr.sendMessage(PrefixType.INFO, "You are now #" + c + " in line for arena " + gameID, p);
+			msgmgr.sendMessage(PrefixType.INFO, "Вы под номером " + c + " в очереди на арену " + gameID, p);
 			c++;
 		}
 
@@ -195,7 +195,7 @@ public class Game {
 
 		if (GameManager.getInstance().getPlayerGameId(p) != -1) {
 			if (GameManager.getInstance().isPlayerActive(p)) {
-				msgmgr.sendMessage(PrefixType.ERROR, "Cannot join multiple games!", p);
+				msgmgr.sendMessage(PrefixType.ERROR, "Нельзя вступить на несколько арен сразу!", p);
 				return false;
 			}
 		}
@@ -205,7 +205,7 @@ public class Game {
 		if (spectators.contains(p)) removeSpectator(p);
 		if (mode == GameMode.WAITING || mode == GameMode.STARTING) {
 			if (activePlayers.size() < SettingsManager.getInstance().getSpawnCount(gameID)) {
-				msgmgr.sendMessage(PrefixType.INFO, "Joining Arena " + gameID, p);
+				msgmgr.sendMessage(PrefixType.INFO, "Вход на арену " + gameID, p);
 				PlayerJoinArenaEvent joinarena = new PlayerJoinArenaEvent(p, GameManager.getInstance().getGame(gameID));
 				Bukkit.getServer().getPluginManager().callEvent(joinarena);
 				boolean placed = false;
@@ -242,7 +242,7 @@ public class Game {
 				}
 
 			} else if (SettingsManager.getInstance().getSpawnCount(gameID) == 0) {
-				msgmgr.sendMessage(PrefixType.WARNING, "No spawns set for Arena " + gameID + "!", p);
+				msgmgr.sendMessage(PrefixType.WARNING, "Для арены " + gameID + " не указаны точки спавна!", p);
 				return false;
 			} else {
 				msgmgr.sendFMessage(PrefixType.WARNING, "error.gamefull", p, "arena-"+gameID);
@@ -270,7 +270,7 @@ public class Game {
 		if (mode == GameMode.INGAME) msgmgr.sendFMessage(PrefixType.WARNING, "error.alreadyingame", p);
 		else if (mode == GameMode.DISABLED) msgmgr.sendFMessage(PrefixType.WARNING, "error.gamedisabled", p, "arena-"+gameID);
 		else if (mode == GameMode.RESETING) msgmgr.sendFMessage(PrefixType.WARNING, "error.gamereseting", p);
-		else msgmgr.sendMessage(PrefixType.INFO, "Cannot join game!", p);
+		else msgmgr.sendMessage(PrefixType.INFO, "Ошибка входа на арену!", p);
 		LobbyManager.getInstance().updateWall(gameID);
 		return false;
 	}
@@ -278,7 +278,7 @@ public class Game {
 
 	public void showMenu(Player p){
 		GameManager.getInstance().openKitMenu(p);
-		Inventory i = Bukkit.getServer().createInventory(p, 90, ChatColor.RED+""+ChatColor.BOLD+"Kit Selection");
+		Inventory i = Bukkit.getServer().createInventory(p, 90, ChatColor.RED+""+ChatColor.BOLD+"Выбор набора");
 
 		int a = 0;
 		int b = 0;
@@ -339,15 +339,15 @@ public class Game {
 
 
 		if (GameMode.STARTING == mode) {
-			msgmgr.sendMessage(PrefixType.WARNING, "Game already starting!", pl);
+			msgmgr.sendMessage(PrefixType.WARNING, "Игра уже началась!", pl);
 			return;
 		}
 		if (GameMode.WAITING != mode) {
-			msgmgr.sendMessage(PrefixType.WARNING, "Game already started!", pl);
+			msgmgr.sendMessage(PrefixType.WARNING, "Игра уже началась!", pl);
 			return;
 		}
 		if (voted.contains(pl)) {
-			msgmgr.sendMessage(PrefixType.WARNING, "You already voted!", pl);
+			msgmgr.sendMessage(PrefixType.WARNING, "Вы уже голосовали!", pl);
 			return;
 		}
 		vote++;
@@ -362,7 +362,7 @@ public class Game {
 			countdown(config.getInt("auto-start-time"));
 			for (Player p: activePlayers) {
 				//p.sendMessage(ChatColor.LIGHT_PURPLE + "Game Starting in " + c.getInt("auto-start-time"));
-				msgmgr.sendMessage(PrefixType.INFO, "Game starting in " + config.getInt("auto-start-time") + "!", p);
+				msgmgr.sendMessage(PrefixType.INFO, "Игра начнется через " + config.getInt("auto-start-time") + "!", p);
 			}
 		}
 	}
@@ -384,7 +384,7 @@ public class Game {
 
 		if (activePlayers.size() <= 1) {
 			for (Player pl: activePlayers) {
-				msgmgr.sendMessage(PrefixType.WARNING, "Not enough players!", pl);
+				msgmgr.sendMessage(PrefixType.WARNING, "Недостаточно игрков!", pl);
 				mode = GameMode.WAITING;
 				LobbyManager.getInstance().updateWall(gameID);
 
@@ -406,12 +406,12 @@ public class Game {
 			}
 			if (config.getInt("grace-period") != 0) {
 				for (Player play: activePlayers) {
-					msgmgr.sendMessage(PrefixType.INFO, "You have a " + config.getInt("grace-period") + " second grace period!", play);
+					msgmgr.sendMessage(PrefixType.INFO, "Вам предоставлен режим бога на " + config.getInt("grace-period") + " "+StringUtil.plural(config.getInt("grace-period"),"секунду","секунды","секунд")+"!", play);
 				}
 				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(GameManager.getInstance().getPlugin(), new Runnable() {
 					public void run() {
 						for (Player play: activePlayers) {
-							msgmgr.sendMessage(PrefixType.INFO, "Grace period has ended!", play);
+							msgmgr.sendMessage(PrefixType.INFO, "Режим бога закончился!", play);
 						}
 					}
 				}, config.getInt("grace-period") * 20);
@@ -558,8 +558,8 @@ public class Game {
 				}
 				if (getActivePlayers() > 1) {
 					for (Player pl: getAllPlayers()) {
-						msgmgr.sendMessage(PrefixType.INFO, ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + "" + getActivePlayers() + ChatColor.DARK_AQUA + " players remaining!", pl);
-					}
+                        msgmgr.sendMessage(PrefixType.INFO, ChatColor.DARK_AQUA + StringUtil.plural(getActivePlayers(), "Остался", "Осталось", "Остались") + " " + ChatColor.YELLOW + getActivePlayers() + ChatColor.DARK_AQUA + " " + StringUtil.plural(getActivePlayers(), "игрок", "игрока", "игроков") + "!", pl);
+                    }
 				}
 			}
 		}
@@ -603,7 +603,7 @@ public class Game {
 		restoreInv(win);
 		msgmgr.broadcastFMessage(PrefixType.INFO, "game.playerwin","arena-"+gameID, "victim-"+p.getName(), "player-"+win.getName());
 		LobbyManager.getInstance().display(new String[] {
-				win.getName(), "", "Won the ", "Survival Games!"
+				win.getName(), "", "Выиграл ", "Голодные Игры!"
 		}, gameID);
 
 		mode = GameMode.FINISHING;
@@ -651,7 +651,7 @@ public class Game {
 			try {
 
 				Player p = activePlayers.get(a);
-				msgmgr.sendMessage(PrefixType.WARNING, "Game disabled!", p);
+				msgmgr.sendMessage(PrefixType.WARNING, "Арена выключена!", p);
 				removePlayer(p, false);
 			} catch (Exception e) {}
 
@@ -661,7 +661,7 @@ public class Game {
 			try {
 
 				Player p = inactivePlayers.remove(a);
-				msgmgr.sendMessage(PrefixType.WARNING, "Game disabled!", p);
+				msgmgr.sendMessage(PrefixType.WARNING, "Арена выключена!", p);
 			} catch (Exception e) {}
 
 		}
@@ -740,7 +740,7 @@ public class Game {
 
 	public void addSpectator(Player p) {
 		if (mode != GameMode.INGAME) {
-			msgmgr.sendMessage(PrefixType.WARNING, "You can only spectate running games!", p);
+			msgmgr.sendMessage(PrefixType.WARNING, "Вы можете наблюдать только за уже начавшимися играми!", p);
 			return;
 		}
 
@@ -757,8 +757,8 @@ public class Game {
 		p.setAllowFlight(true);
 		p.setFlying(true);
 		spectators.add(p.getName());
-		msgmgr.sendMessage(PrefixType.INFO, "You are now spectating! Use /sg spectate again to return to the lobby.", p);
-		msgmgr.sendMessage(PrefixType.INFO, "Right click while holding shift to teleport to the next ingame player, left click to go back.", p);
+		msgmgr.sendMessage(PrefixType.INFO, "Вы в режиме наблюдения! Введите /sg spectate для возврата в лобби.", p);
+		msgmgr.sendMessage(PrefixType.INFO, "Щелкните правой кнопкой мыши, удерживая shift чтобы телепортироваться к следующему игроку, щелкните левой кнопкой мыши, чтобы вернуться.", p);
 		nextspec.put(p, 0);
 	}
 
@@ -837,7 +837,7 @@ public class Game {
 		public void run() {
 			if (SettingsManager.getGameWorld(gameID).getTime() > 14000) {
 				for (Player pl: activePlayers) {
-					msgmgr.sendMessage(PrefixType.INFO, "Chests restocked!", pl);
+					msgmgr.sendMessage(PrefixType.INFO, "Сундуки восстановлены!", pl);
 				}
 				GameManager.openedChest.get(gameID).clear();
 				reset = true;
@@ -934,8 +934,22 @@ public class Game {
 		return activePlayers.contains(p) || inactivePlayers.contains(p);
 	}
 	public GameMode getMode() {
-		return mode;
-	}
+        return mode;
+    }
+    public String getModeString(){
+        switch (mode){
+            case DISABLED: return "ВЫКЛЮЧЕНА";
+            case LOADING: return "ЗАГРУЖАЕТСЯ";
+            case INACTIVE: return "НЕ АКТИВНА";
+            case WAITING: return "ОЖИДАНИЕ";
+            case STARTING: return "НАЧАЛО ИГРЫ";
+            case INGAME: return "ИГРА";
+            case FINISHING: return "ФИНИШИРВОАНИЕ";
+            case RESETING: return "СБРОС";
+            case ERROR: return "ОШИБКА";
+        }
+        return "WTF???";
+    }
 
 	public synchronized void setRBPercent(double d) {
 		rbpercent = d;
@@ -954,7 +968,7 @@ public class Game {
 	}
 
 	public String getName() {
-		return "Arena "+gameID;
+		return "Арена "+gameID;
 	}
 
 	public void msgFall(PrefixType type, String msg, String...vars){

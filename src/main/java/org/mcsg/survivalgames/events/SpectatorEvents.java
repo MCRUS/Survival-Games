@@ -73,7 +73,7 @@ public class SpectatorEvents implements Listener {
                 l.setYaw(0);
                 l.setPitch(0);
                 player.teleport(l);
-                player.sendMessage(ChatColor.AQUA+"You are now spectating "+tpto.getName());
+                player.sendMessage(ChatColor.AQUA+"Теперь Вы наблюдаете за "+tpto.getName());
             }
             else if (GameManager.getInstance().isSpectator(player)) {
                 event.setCancelled(true);

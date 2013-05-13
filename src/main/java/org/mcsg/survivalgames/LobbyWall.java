@@ -59,10 +59,12 @@ public class LobbyWall {
         if (dir == 3 || dir == 5) {
             Collections.reverse(signs);
         }
-        addMsg("SurvivalGames");
+        addMsg("ГолодныеИгры");
         addMsg("Double0negative");
         addMsg("mc-sg.org");
-        addMsg("Game id: " + gameid);
+        addMsg("Номер арены: " + gameid);
+        addMsg("Перевод");
+        addMsg("Alex_Bond_UA");
         update();
         return true;
     }
@@ -85,13 +87,14 @@ public class LobbyWall {
         Sign s1 = signs.get(1);
 
         //sign 0
-        s0.setLine(0, "[SurvivalGames]");
-        s0.setLine(1, "Click to join");
-        s0.setLine(2, "Arena " + gameid);
+        s0.setLine(0, "Голодные Игры");
+        s0.setLine(1, "Нажми");
+        s0.setLine(2, "для входа");
+        s0.setLine(3, "на арену " + gameid);
 
         //sign 1
         s1.setLine(0, game.getName());
-        s1.setLine(1, game.getMode() + "");
+        s1.setLine(1, game.getModeString());
         s1.setLine(2, game.getActivePlayers() + "/" + ChatColor.GRAY + game.getInactivePlayers() + ChatColor.BLACK + "/" + SettingsManager.getInstance().getSpawnCount(game.getID()));
 
         //live update line s1
@@ -100,8 +103,9 @@ public class LobbyWall {
         } else if (game.getMode() == Game.GameMode.RESETING || game.getMode() == Game.GameMode.FINISHING) {
             s1.setLine(3, game.getRBStatus());
             if (game.getRBPercent() > 100) {
-                s1.setLine(1, "Saving Queue");
-                s1.setLine(3, (int) game.getRBPercent() + " left");
+                s1.setLine(1, "Сохранение");
+                s1.setLine(1, "очереди");
+                s1.setLine(3, "Осталось " + (int) game.getRBPercent());
             } else s1.setLine(3, (int) game.getRBPercent() + "%");
         } else {
             s1.setLine(3, "");

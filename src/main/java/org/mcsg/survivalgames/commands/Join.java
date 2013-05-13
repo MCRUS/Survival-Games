@@ -18,13 +18,13 @@ public class Join implements SubCommand{
 				int a = Integer.parseInt(args[0]);
 				GameManager.getInstance().addPlayer(player, a);
 			}catch(NumberFormatException e){
-				MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.input",player, "message-Game must be a number!");
+				MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.input",player, "message-Номер арены может быть только числовым!");
 			}
 		}
 		else{
 			if(player.hasPermission("sg.lobby.join")){
 				if(GameManager.getInstance().getPlayerGameId(player)!=-1){
-					player.sendMessage(ChatColor.RED+"Cannot join the lobby while ingame");
+					player.sendMessage(ChatColor.RED+"Нельзя перейти в лобби во время игры");
 					return true;
 				}
 				player.teleport(SettingsManager.getInstance().getLobbySpawn());
@@ -39,7 +39,7 @@ public class Join implements SubCommand{
 
 	@Override
 	public String help(Player p) {
-		return "/sg join - Join the lobby";
+		return "/sg join - Переход в лобби";
 	}
 
 	@Override

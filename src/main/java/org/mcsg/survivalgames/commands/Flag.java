@@ -16,7 +16,7 @@ public class Flag implements SubCommand {
     public boolean onCommand(Player player, String[] args) {
         
         if(!player.hasPermission("sg.admin.flag")){
-            player.sendMessage(ChatColor.RED + "No Permission");
+            player.sendMessage(ChatColor.RED + "Недостаточно прав");
             return true;
         }
         
@@ -28,7 +28,7 @@ public class Flag implements SubCommand {
         Game g = GameManager.getInstance().getGame(Integer.parseInt(args[0]));
         
         if(g == null){
-            player.sendMessage(ChatColor.RED+"Arena does not exist!");
+            player.sendMessage(ChatColor.RED+"Арена не существует!");
             return true;
         }
         
@@ -43,7 +43,7 @@ public class Flag implements SubCommand {
 
     @Override
     public String help(Player p) {
-        return "/sg flag <id> <flag> <value> - Modifies an arena-specific setting";
+        return "/sg flag <id> <флаг> <значение> - Изменяет настройку указаной арены";
     }
 
 	@Override

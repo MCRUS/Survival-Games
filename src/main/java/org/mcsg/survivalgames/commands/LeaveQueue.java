@@ -15,7 +15,7 @@ public class LeaveQueue implements SubCommand{
 
     @Override
     public String help(Player p) {
-        return "/sg lq - Leave the queue for any queued games";
+        return "/sg lq - Покинуть все очереди";
     }
 
 	@Override

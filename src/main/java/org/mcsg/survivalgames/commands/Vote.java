@@ -12,7 +12,7 @@ public class Vote implements SubCommand {
         if(!(player.hasPermission("sg.player.vote"))) return false;
         int game = GameManager.getInstance().getPlayerGameId(player);
         if(game == -1){
-            player.sendMessage(ChatColor.RED+"Must be in a game!");
+            player.sendMessage(ChatColor.RED+"Вы должны быть в игре!");
             return true;
         }
 
@@ -23,7 +23,7 @@ public class Vote implements SubCommand {
     
     @Override
     public String help(Player p) {
-        return "/sg vote - Votes to start the game";
+        return "/sg vote - Голосование за старт игры";
     }
 
 	@Override

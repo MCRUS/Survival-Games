@@ -15,7 +15,7 @@ public class Enable implements SubCommand{
 	@Override
 	public boolean onCommand(Player player, String[] args) {        
 		if(!player.hasPermission("sg.arena.enable") && !player.isOp()){
-			player.sendMessage(ChatColor.RED+"No Permission");
+			player.sendMessage(ChatColor.RED+"Недостаточно прав");
 			return true;
 		}
 		try{
@@ -24,16 +24,16 @@ public class Enable implements SubCommand{
 					if(g.getMode() == GameMode.DISABLED)
 						g.enable();
 				}
-				player.sendMessage(ChatColor.GREEN+"Enabled all arenas");
+				player.sendMessage(ChatColor.GREEN+"Все арены включены");
 			}
 			else{
 				GameManager.getInstance().enableGame(Integer.parseInt(args[0]));
-				player.sendMessage(ChatColor.GREEN+"Arena "+ args[0]+ " Enabled");
+				player.sendMessage(ChatColor.GREEN+"Арена "+ args[0]+ " включена");
 			}
 		}catch(NumberFormatException e){
-			MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.input",player, "message-Game must be a number!");
+			MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.input",player, "message-Номер арены может быть только числовой!");
 		}catch(NullPointerException e){
-			MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.input",player, "message-No game by this ID exist!");
+			MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.input",player, "message-Арена с таким номером не найдена!");
 		}
 		return true;
 
@@ -42,7 +42,7 @@ public class Enable implements SubCommand{
 
 	@Override
 	public String help(Player p) {
-		return "/sg enable <id> - Enables Arena <id>";
+		return "/sg enable <id> - Включает арену <id>";
 	}
 
 	@Override

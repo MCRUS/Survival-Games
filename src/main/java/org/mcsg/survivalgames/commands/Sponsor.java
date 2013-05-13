@@ -71,7 +71,7 @@ public class Sponsor implements SubCommand {
 
 	@Override
 	public String help(Player p) {
-		return "/sg sponsor <player> <itemid> <amount> - Sponsor a player!";
+		return "/sg sponsor <игрок> <номер предмета> <количество> - Помощь игроку!";
 	}
 
 	@Override

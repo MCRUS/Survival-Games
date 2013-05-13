@@ -17,14 +17,14 @@ public class Teleport implements SubCommand{
 					try{
 						player.teleport(SettingsManager.getInstance().getSpawnPoint(a, 1));
 					}catch(Exception e){
-						MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.input",player, "message-No spanws set for this arena!");
+						MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.input",player, "message-Не указаны точки спавна на арене!");
 					}
 				}catch(NumberFormatException e){
-					MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.input",player, "message-Game must be a number!");
+					MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.input",player, "message-Номер игры должен быть числовым!");
 				}
 			}
 			else{
-				MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.input",player, "message-Must Specify an arena id!");
+				MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.input",player, "message-Нужно указать номер арены!");
 			}
 		}
 		else {
@@ -35,7 +35,7 @@ public class Teleport implements SubCommand{
 
 	@Override
 	public String help(Player p) {
-		return "/sg tp <arenaid> Teleport to an arena";
+		return "/sg tp <номер арены> телепортирует на арену";
 	}
 
 	@Override

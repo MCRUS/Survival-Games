@@ -27,14 +27,14 @@ public class SignClickEvent implements Listener{
         //System.out.println("Clicked sign");
         String[] lines = thisSign.getLines();
         if(lines.length<3) return;
-        if(lines[0].equalsIgnoreCase("[SurvivalGames]")) {
+        if(lines[0].equalsIgnoreCase("Голодные Игры")) {
             e.setCancelled(true);
             try{
-                if(lines[2].equalsIgnoreCase("Auto Assign")){
+                if(lines[2].equalsIgnoreCase("Авто сортировка")){
                     GameManager.getInstance().autoAddPlayer(e.getPlayer());
                 }
                 else{
-                    String game = lines[2].replace("Arena ", "");
+                    String game = lines[3].replace("на арену ", "");
                     int gameno  = Integer.parseInt(game);
                     GameManager.getInstance().addPlayer(e.getPlayer(), gameno);
                 }

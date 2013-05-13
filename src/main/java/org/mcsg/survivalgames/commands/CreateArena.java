@@ -10,7 +10,7 @@ public class CreateArena implements SubCommand{
 
     public boolean onCommand(Player player, String[] args) {
         if(!player.hasPermission("sg.admin.createarena") && !player.isOp()){
-            player.sendMessage(ChatColor.RED+"No Permission");
+            player.sendMessage(ChatColor.RED+"Недостаточно прав");
             return true;
         }
         GameManager.getInstance().createArenaFromSelection(player);
@@ -19,7 +19,7 @@ public class CreateArena implements SubCommand{
 
     @Override
     public String help(Player p) {
-        return "/sg createarena - Create a new arena with the current WorldEdit selection";
+        return "/sg createarena - Создает арену в зоне выделенной с помощью WorldEdit";
     }
 
 	@Override

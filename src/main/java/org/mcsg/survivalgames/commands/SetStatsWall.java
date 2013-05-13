@@ -14,7 +14,7 @@ public class SetStatsWall implements SubCommand {
 
     
     public String help(Player p){
-        return "/sg setstatswall - Sets the stats wall";
+        return "/sg setstatswall - Указывает стену статистики";
     }
 
 	@Override

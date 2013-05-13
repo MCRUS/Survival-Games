@@ -24,16 +24,16 @@ public class ListPlayers implements SubCommand{
 			player.sendMessage(msg);
 			return false;
 		}catch(NumberFormatException e){
-			MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.input",player, "message-Game must be a number!");
+			MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.input",player, "message-Номер арены может быть только числовым!");
 		}catch(NullPointerException e){
-			MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.input",player, "message-No game by this ID exist!");
+			MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.input",player, "message-Арена с таким номером не найдена!");
 		}
 		return false;
 	}
 
 	@Override
 	public String help(Player p) {
-		return "/list - List all players in the arena you are playing in";
+		return "/list - Список всех игроков на арене";
 	}
 
 	@Override

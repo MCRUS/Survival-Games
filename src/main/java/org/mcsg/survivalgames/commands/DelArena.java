@@ -22,7 +22,7 @@ public class DelArena implements SubCommand{
         }
         
         if(args.length != 1){
-			MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.input",player, "message-Please specify an arena");
+			MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.input",player, "message-Пожалуйста, укажите арену");
             return true;
         }
         
@@ -32,7 +32,7 @@ public class DelArena implements SubCommand{
         Game g = GameManager.getInstance().getGame(arena);
         
         if(g == null){
-			MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.input",player, "message-Invalid arena!");
+			MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.input",player, "message-Неверная арена!");
             return true;
         }
         
@@ -40,7 +40,7 @@ public class DelArena implements SubCommand{
         s.set("sg-system.arenas."+arena+".enabled", false);
         s.set("sg-system.arenano", s.getInt("sg-system.arenano") - 1);
         //spawn.set("spawns."+arena, null);
-        player.sendMessage(ChatColor.GREEN+"Arena deleted");
+        player.sendMessage(ChatColor.GREEN+"Арена удалена");
         SettingsManager.getInstance().saveSystemConfig();
         GameManager.getInstance().hotRemoveArena(arena);
         LobbyManager.getInstance().clearAllSigns();
@@ -49,7 +49,7 @@ public class DelArena implements SubCommand{
 
     @Override
     public String help (Player p) {
-        return "/sg delarena <id> - Delete an arena";
+        return "/sg delarena <id> - Удаляет арену";
     }
 
 	@Override

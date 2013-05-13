@@ -26,7 +26,7 @@ public class SetLobbyWall implements SubCommand{
 
     @Override
     public String help(Player p) {
-        return "/sg addwall <id> - Add a lobby stats wall for Arena <id>";
+        return "/sg addwall <id> - Добавляет стену статистики для арены <id>";
     }
 
 	@Override

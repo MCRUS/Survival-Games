@@ -12,7 +12,7 @@ public class Disable implements SubCommand{
     @Override
     public boolean onCommand(Player player, String[] args) {        
         if(!player.hasPermission("sg.staff.disablearena") && !player.isOp()){
-            player.sendMessage(ChatColor.RED+"No Permission");
+            player.sendMessage(ChatColor.RED+"Недостаточно прав");
             return true;
         }
 
@@ -20,18 +20,18 @@ public class Disable implements SubCommand{
             for(Game g: GameManager.getInstance().getGames()){
                 g.disable();
             }
-            player.sendMessage(ChatColor.GREEN+"All Arenas disabled");
+            player.sendMessage(ChatColor.GREEN+"Все арены выключены");
 
         }else{
 
             GameManager.getInstance().disableGame(Integer.parseInt(args[0]));
-            player.sendMessage(ChatColor.GREEN+"Arena "+args[0]+" disabled");
+            player.sendMessage(ChatColor.GREEN+"Арена "+args[0]+" выключена");
         }
         return true;
     }
     @Override
     public String help(Player p) {
-        return "/sg disable <id> - Disable arena <id>";
+        return "/sg disable <id> - Выключает арену <id>";
     }
 	@Override
 	public String permission() {

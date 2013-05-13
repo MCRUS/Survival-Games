@@ -27,7 +27,7 @@ public class SetSpawn implements SubCommand{
     
     public boolean onCommand(Player player, String[] args) {
         if(!player.hasPermission("sg.admin.setarenaspawns") && !player.isOp()){
-            player.sendMessage(ChatColor.RED+"No Permission");
+            player.sendMessage(ChatColor.RED+"Недостаточно прав");
             return true;
         }
         
@@ -37,7 +37,7 @@ public class SetSpawn implements SubCommand{
         int game = GameManager.getInstance().getBlockGameId(l);
         System.out.println(game+" "+next.size());
         if(game == -1){
-            player.sendMessage(ChatColor.RED+"Must be in an arena!");
+            player.sendMessage(ChatColor.RED+"Вы должны быть на арене!");
             return true;
         }
         int i = 0;
@@ -49,30 +49,30 @@ public class SetSpawn implements SubCommand{
             try{
             i = Integer.parseInt(args[0]);
             if(i>next.get(game)+1 || i<1){
-                player.sendMessage(ChatColor.RED+"Spawn must be between 1 & "+next.get(game));
+                player.sendMessage(ChatColor.RED+"Номер точки спавна должен быть от 1 до "+next.get(game));
                 return true;
             }
             if(i == next.get(game)){
                 next.put(game, next.get(game)+1);
             }
             }catch(Exception e){
-                player.sendMessage(ChatColor.RED+"Malformed input. Must be \"next\" or a number");
+                player.sendMessage(ChatColor.RED+"Неверный синтаксис. Параметр должен быть \"next\" или число");
                 return false;
             }
         }
         if(i == -1){
-            player.sendMessage(ChatColor.RED+"You must be inside an arnea");
+            player.sendMessage(ChatColor.RED+"Вы должны быть на арене");
             return true;
         }
         SettingsManager.getInstance().setSpawn(game, i, l.toVector());
-        player.sendMessage(ChatColor.GREEN+"Spawn "+i +" in arena "+game+" set!");
+        player.sendMessage(ChatColor.GREEN+"Точка спавна "+i +" на арене "+game+" указана!");
 
         return true;
     }
     
     @Override
     public String help(Player p) {
-        return "/sg setspawn next - Sets a spawn for the arena you are located in";
+        return "/sg setspawn next - Указывает точку спавна на арене где расположен игрок";
     }
 
 	@Override

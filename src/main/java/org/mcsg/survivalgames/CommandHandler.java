@@ -108,19 +108,19 @@ public class CommandHandler implements CommandExecutor {
 		Player player = (Player) sender;
 
 		if (SurvivalGames.config_todate == false) {
-			msgmgr.sendMessage(PrefixType.WARNING, "The config file is out of date. Please tell an administrator to reset the config.", player);
+			msgmgr.sendMessage(PrefixType.WARNING, "Файл настроек слишком старый. Попросите администратора сбросить настройки.", player);
 			return true;
 		}
 
 		if (SurvivalGames.dbcon == false) {
-			msgmgr.sendMessage(PrefixType.WARNING, "Could not connect to server. Plugin disabled.", player);
+			msgmgr.sendMessage(PrefixType.WARNING, "Ошибка подключения к серверу. Плагин отключен.", player);
 			return true;
 		}
 
 		if (cmd1.getName().equalsIgnoreCase("survivalgames")) {
 			if (args == null || args.length < 1) {
-				msgmgr.sendMessage(PrefixType.INFO, "Version " + pdfFile.getVersion() + " by Double0negative", player);
-				msgmgr.sendMessage(PrefixType.INFO, "Type /sg help <player | staff | admin> for command information", player);
+				msgmgr.sendMessage(PrefixType.INFO, "Версия " + pdfFile.getVersion() + " от Double0negative", player);
+				msgmgr.sendMessage(PrefixType.INFO, "Введите /sg help <player | staff | admin> для вывода списка команд", player);
 				return true;
 			}
 			if (args[0].equalsIgnoreCase("help")) {
@@ -141,7 +141,7 @@ public class CommandHandler implements CommandExecutor {
 						return true;
 					}
 					else {
-						msgmgr.sendMessage(PrefixType.WARNING, args[1] + " is not a valid page! Valid pages are Player, Staff, and Admin.", player);
+						msgmgr.sendMessage(PrefixType.WARNING, args[1] + " не является корректной страницей! Правильные страницы Player, Staff и Admin.", player);
 					}
 				}
 				return true;
@@ -152,8 +152,8 @@ public class CommandHandler implements CommandExecutor {
 			l.remove(0);
 			args = (String[]) l.toArray(new String[0]);
 			if (!commands.containsKey(sub)) {
-				msgmgr.sendMessage(PrefixType.WARNING, "Command doesn't exist.", player);
-				msgmgr.sendMessage(PrefixType.INFO, "Type /sg help for command information", player);
+				msgmgr.sendMessage(PrefixType.WARNING, "Команда не существует.", player);
+				msgmgr.sendMessage(PrefixType.INFO, "Введите /sg help для получения списка команд", player);
 				return true;
 			}
 			try {
@@ -161,7 +161,7 @@ public class CommandHandler implements CommandExecutor {
 			} catch (Exception e) {
 				e.printStackTrace();
 				msgmgr.sendFMessage(PrefixType.ERROR, "error.command", player, "command-["+sub+"] "+Arrays.toString(args));
-				msgmgr.sendMessage(PrefixType.INFO, "Type /sg help for command information", player);
+				msgmgr.sendMessage(PrefixType.INFO, "Введите /sg help для получения списка команд", player);
 			}
 			return true;
 		}
@@ -170,13 +170,13 @@ public class CommandHandler implements CommandExecutor {
 
 	public void help (Player p, int page) {
 		if (page == 1) {
-			p.sendMessage(ChatColor.BLUE + "------------ " + msgmgr.pre + ChatColor.DARK_AQUA + " Player Commands" + ChatColor.BLUE + " ------------");
+			p.sendMessage(ChatColor.BLUE + "------------ " + msgmgr.pre + ChatColor.DARK_AQUA + " Команды игрков" + ChatColor.BLUE + " ------------");
 		}
 		if (page == 2) {
-			p.sendMessage(ChatColor.BLUE + "------------ " + msgmgr.pre + ChatColor.DARK_AQUA + " Staff Commands" + ChatColor.BLUE + " ------------");
+			p.sendMessage(ChatColor.BLUE + "------------ " + msgmgr.pre + ChatColor.DARK_AQUA + " Команыд персонала" + ChatColor.BLUE + " ------------");
 		}
 		if (page == 3) {
-			p.sendMessage(ChatColor.BLUE + "------------ " + msgmgr.pre + ChatColor.DARK_AQUA + " Admin Commands" + ChatColor.BLUE + " ------------");
+			p.sendMessage(ChatColor.BLUE + "------------ " + msgmgr.pre + ChatColor.DARK_AQUA + " Команды админа" + ChatColor.BLUE + " ------------");
 		}
 
 		for (String command : commands.keySet()) {

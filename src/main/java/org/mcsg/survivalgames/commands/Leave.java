@@ -10,7 +10,7 @@ public class Leave implements SubCommand {
 	
     public boolean onCommand(Player player, String[] args) {
         if(GameManager.getInstance().getPlayerGameId(player) == -1){
-            player.sendMessage(ChatColor.RED+"Not in a game!");
+            player.sendMessage(ChatColor.RED+"Вы не в игре!");
         }
         else{
             GameManager.getInstance().removePlayer(player, false);
@@ -20,7 +20,7 @@ public class Leave implements SubCommand {
 
     @Override
     public String help(Player p) {
-        return "/sg leave - Leaves the game";
+        return "/sg leave - Покинуть игру";
     }
 
 	@Override

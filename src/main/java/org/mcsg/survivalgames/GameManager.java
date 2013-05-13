@@ -148,7 +148,7 @@ public class GameManager {
 		for (Game g: getGames()) {
 			if (g.isInQueue(p) && g.getID() != id) {
 				g.removeFromQueue(p);
-				msgmgr.sendMessage(PrefixType.INFO, "Removed from the queue in arena " + g.getID(), p);
+				msgmgr.sendMessage(PrefixType.INFO, "Вы покинули очеред на арене " + g.getID(), p);
 			}
 		}
 	}
@@ -246,7 +246,7 @@ public class GameManager {
 	public void addPlayer(Player p, int g) {
 		Game game = getGame(g);
 		if (game == null) {
-			MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.input",p, "message-No game by this ID exist!");
+			MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.input",p, "message-Арена с таким номером не найдена!");
 			return;
 		}
 		getGame(g).addPlayer(p);
@@ -259,8 +259,8 @@ public class GameManager {
 		}
 		//TODO: fancy auto balance algorithm
 		if (qg.size() == 0) {
-			pl.sendMessage(ChatColor.RED + "No games to join");
-			msgmgr.sendMessage(PrefixType.WARNING, "No games to join!", pl);
+			pl.sendMessage(ChatColor.RED + "Нет доступных арен");
+			msgmgr.sendMessage(PrefixType.WARNING, "Нет доступных арен!", pl);
 			return;
 		}
 		qg.get(0).addPlayer(pl);
@@ -277,7 +277,7 @@ public class GameManager {
 		WorldEditPlugin we = p.getWorldEdit();
 		Selection sel = we.getSelection(pl);
 		if (sel == null) {
-			msgmgr.sendMessage(PrefixType.WARNING, "You must make a WorldEdit Selection first!", pl);
+			msgmgr.sendMessage(PrefixType.WARNING, "Сначала надо выделить облась с помощью WorldEdit!", pl);
 			return;
 		}
 		Location max = sel.getMaximumPoint();
@@ -305,7 +305,7 @@ public class GameManager {
 
 		SettingsManager.getInstance().saveSystemConfig();
 		hotAddArena(no);
-		pl.sendMessage(ChatColor.GREEN + "Arena ID " + no + " Succesfully added");
+		pl.sendMessage(ChatColor.GREEN + "Арена с ID " + no + " успешно создана");
 
 	}
 
@@ -334,12 +334,12 @@ public class GameManager {
 		StringBuilder sb = new StringBuilder();
 		Player[][]players = g.getPlayers();
 
-		sb.append(ChatColor.GREEN+"<---------------------[ Alive: "+players[0].length+" ]--------------------->\n"+ChatColor.GREEN+" ");
+		sb.append(ChatColor.GREEN+"<---------------------[ Живые: "+players[0].length+" ]--------------------->\n"+ChatColor.GREEN+" ");
 		for(Player p: players[0]){
 			sb.append(p.getName()+",");
 		}
 		sb.append("\n\n");
-		sb.append(ChatColor.RED+  "<---------------------[ Dead: "+players[1].length+" ]---------------------->\n"+ChatColor.GREEN+" ");
+		sb.append(ChatColor.RED+  "<---------------------[ Мертвые: "+players[1].length+" ]---------------------->\n"+ChatColor.GREEN+" ");
 		for(Player p: players[1]){
 			sb.append(p.getName()+",");
 		}

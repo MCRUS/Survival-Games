@@ -6,7 +6,7 @@ import org.mcsg.survivalgames.Game;
 import org.mcsg.survivalgames.GameManager;
 import org.mcsg.survivalgames.MessageManager;
 import org.mcsg.survivalgames.MessageManager.PrefixType;
-
+import org.mcsg.survivalgames.util.StringUtil;
 
 
 public class ForceStart implements SubCommand {
@@ -16,7 +16,7 @@ public class ForceStart implements SubCommand {
     public boolean onCommand(Player player, String[] args) {
         
         if(!player.hasPermission("sg.staff.forcestart") && !player.isOp()){
-            player.sendMessage(ChatColor.RED+ "No Permission");
+            player.sendMessage(ChatColor.RED+ "Недостаточно прав");
             return true;
         }
         int game = -1;
@@ -31,32 +31,32 @@ public class ForceStart implements SubCommand {
         else
             game  = GameManager.getInstance().getPlayerGameId(player);
         if(game == -1){
-            player.sendMessage(ChatColor.RED+"Must be in a game!");
+            player.sendMessage(ChatColor.RED+"Вы должны быть в игре!");
             return true;
         }
         if(GameManager.getInstance().getGame(game).getActivePlayers() < 2){
-            player.sendMessage(ChatColor.RED+"Needs at least 2 players to start!");
+            player.sendMessage(ChatColor.RED+"Нужно минимум 2 игрока чтобы начать игру!");
             return true;
         }
         
         
 		Game g = GameManager.getInstance().getGame(game);
 		if(g.getMode() != Game.GameMode.WAITING && !player.hasPermission("sg.arena.restart")){
-		    player.sendMessage(ChatColor.RED+"Game Already Starting!");
+		    player.sendMessage(ChatColor.RED+"Игра уже запущена!");
 		    return true;
 		}
 		g.countdown(seconds);
 		for (Player pl : g.getAllPlayers()) {
-        	msgmgr.sendMessage(PrefixType.INFO, "Game starting in " + seconds + " seconds!", pl);
+        	msgmgr.sendMessage(PrefixType.INFO, "Игра начнется через " + seconds + " " + StringUtil.plural(seconds,"секунду","секунды","секунд") + "!", pl);
         }
-		player.sendMessage(ChatColor.GREEN+"Started arena "+game);
+		player.sendMessage(ChatColor.GREEN+"Игра на арене "+game+" запущена.");
 		
 		return true;
 	}
     
     @Override
     public String help(Player p) {
-        return "/sg forcestart - Force starts a game";
+        return "/sg forcestart - Форсировано запускает игру";
     }
 
 	@Override

@@ -136,11 +136,11 @@ public class LobbyManager {
 		WorldEditPlugin we = GameManager.getInstance().getWorldEdit();
 		Selection sel = we.getSelection(pl);
 		if (sel == null) {
-			pl.sendMessage(ChatColor.RED + "You must make a WorldEdit Selection first");
+			pl.sendMessage(ChatColor.RED + "Сначала выделите область с помощью WorldEdit");
 			return;
 		}
 		if ((sel.getNativeMaximumPoint().getBlockX() - sel.getNativeMinimumPoint().getBlockX()) != 0 && (sel.getNativeMinimumPoint().getBlockZ() - sel.getNativeMaximumPoint().getBlockZ() != 0)) {
-			pl.sendMessage(ChatColor.RED + " Must be in a straight line!");
+			pl.sendMessage(ChatColor.RED + " Выделение должно быть в 1 блок в толщину!");
 			return;
 		}
 		Vector max = sel.getNativeMaximumPoint();
@@ -155,7 +155,7 @@ public class LobbyManager {
 		c.set("sg-system.lobby.signs." + i + ".x2", min.getBlockX());
 		c.set("sg-system.lobby.signs." + i + ".y2", min.getBlockY());
 		c.set("sg-system.lobby.signs." + i + ".z2", min.getBlockZ());
-		pl.sendMessage(ChatColor.GREEN + "Added Lobby Wall"); //TODO
+		pl.sendMessage(ChatColor.GREEN + "Стена в лобби создана"); //TODO
 		s.saveSystemConfig();
 		loadSign(i);
 	}
